@@ -9,7 +9,7 @@ public class playermovement : MonoBehaviour
 {
 
     public CharacterController controller;
-    public Transform cam;
+    private Transform cam;
     private GameManager gm;
 
     public Animator anim;
@@ -35,6 +35,7 @@ public class playermovement : MonoBehaviour
     void Start()
     {
         gm = GameManager.instance;
+        cam = Camera.main.transform;
     }
 
     // Update is called once per frame
@@ -76,6 +77,8 @@ public class playermovement : MonoBehaviour
 
         controller.Move(velocity * Time.deltaTime);
 
+
+        //Temporary Things- set water/lava levels with numbers
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             gm.waterLevel = 0;
@@ -83,7 +86,14 @@ public class playermovement : MonoBehaviour
         {
             gm.waterLevel = 1;
         }
-
+        if (Input.GetKeyDown(KeyCode.Alpha8))
+        {
+            gm.lavaLevel = 0;
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha9))
+        {
+            gm.lavaLevel = 1;
+        }
     }
 
     //handle interactions with rigidbodies (try to push them)
@@ -109,5 +119,12 @@ public class playermovement : MonoBehaviour
 
         // Apply the push
         body.velocity = pushDir * pushPower;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Lava"){
+            gm.RestartScene();
+        }
     }
 }
