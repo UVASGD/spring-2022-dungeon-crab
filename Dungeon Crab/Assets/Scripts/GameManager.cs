@@ -13,7 +13,9 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
     public int numberOfKeys = 0;
     public int waterLevel = 0;
+    public int lavaLevel = 0;
     public float transitionTime = 0.2f;
+    public string lastSceneName = null;
     private void Awake()
     {
         // this is the code to ensure there's only one gameManager in a scene at a time
@@ -61,6 +63,15 @@ public class GameManager : MonoBehaviour
         waterLevel = level;
         return true;
     }
+    public bool setLavaLevel(int level)
+    {
+        if (lavaLevel == level)
+        {
+            return false;
+        }
+        lavaLevel = level;
+        return true;
+    }
 
     //useKey: if the player has any keys, lose one key and return true. If the player has no keys, return false.
     public bool useKey()
@@ -78,7 +89,22 @@ public class GameManager : MonoBehaviour
 
     public void loadLevel(string sceneName)
     {
+        lastSceneName = SceneManager.GetActiveScene().name;
+        ScreenFade sf = FindObjectOfType<ScreenFade>();
+        if (sf)
+        {
+            sf.FadeOut();
+        }
         StartCoroutine(LoadLevelFromName(sceneName));
+    }
+    public void RestartScene()
+    {
+        ScreenFade sf = FindObjectOfType<ScreenFade>();
+        if (sf)
+        {
+            sf.FadeOut();
+        }
+        StartCoroutine(LoadLevelFromName(SceneManager.GetActiveScene().name));
     }
 
     IEnumerator LoadLevelFromName(string sceneName)

@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 7693099968472579522}
   - component: {fileID: 7693099968472579521}
   m_Layer: 4
-  m_Name: Square Water
+  m_Name: Water
   m_TagString: Water
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -62,7 +62,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: ea66d3ba3c5ac7d498707e8c9e54524f, type: 2}
+  - {fileID: 2100000, guid: c019b9bbe6acea9438a44c7d8ca9c2da, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -161,13 +161,13 @@ MonoBehaviour:
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
   colorGradientTexture: {fileID: 0}
-  shallowColor: {r: 0, g: 0.78089094, b: 1, a: 0.02745098}
-  deepColor: {r: 0, g: 0.33021426, b: 0.6784314, a: 0.09803922}
-  colorDepth: 1.65
-  horizonColor: {r: 0, g: 0.22745094, b: 0.8, a: 0.105882354}
+  shallowColor: {r: 0, g: 0.79604006, b: 1, a: 0.40392157}
+  deepColor: {r: 0, g: 0.26670647, b: 1, a: 0.24705882}
+  colorDepth: 1.77
+  horizonColor: {r: 0.08604336, g: 0, b: 1, a: 1}
   horizonDistance: 20
   shoreFade: 0
-  shoreColor: {r: 0, g: 0.98039216, b: 0.09803922, a: 0}
+  shoreColor: {r: 0, g: 0, b: 0, a: 0}
   shoreStrength: 0
   shoreBlend: 0
   shoreDepth: 0
@@ -175,24 +175,24 @@ MonoBehaviour:
   underwaterColor: {r: 0.2038979, g: 0.3097789, b: 0.517647, a: 0}
   underwaterColorStrength: 0
   underwaterRefractionStrength: 0.099
-  surfaceFoamTexture: {fileID: 2800000, guid: ab507ff7ff37d954da98b07bf0bb152e, type: 3}
-  surfaceFoamSampling: {x: 1, y: 0.572}
+  surfaceFoamTexture: {fileID: 2800000, guid: d3b0d77dfe711a04c8ff18ecc260aa66, type: 3}
+  surfaceFoamSampling: {x: 1, y: 1.48}
   surfaceFoamCutoff: 1
-  surfaceFoamDistortion: 0.572
+  surfaceFoamDistortion: 1.48
   surfaceFoamBlend: 1
-  surfaceFoamColor1: {r: 1, g: 1, b: 1, a: 0.16862746}
-  surfaceFoamColor2: {r: 1, g: 1, b: 1, a: 0.28235295}
-  surfaceFoamMovement: {x: 0.7, y: 0.018, z: 0.475, w: 0.047}
-  surfaceFoamDirection1: 0.7
-  surfaceFoamDirection2: 0.475
-  surfaceFoamSpeed1: 0.018
-  surfaceFoamSpeed2: 0.047
-  surfaceFoamTilingAndOffset: {x: -1, y: -1, z: 0.398, w: 0.477}
-  surfaceFoamOffsetX: -1
-  surfaceFoamOffsetY: -1
-  surfaceFoamScale1: 0.398
-  surfaceFoamScale2: 0.477
-  enableSurfaceFoam: 0
+  surfaceFoamColor1: {r: 1, g: 1, b: 1, a: 0.14901961}
+  surfaceFoamColor2: {r: 1, g: 1, b: 1, a: 0.078431375}
+  surfaceFoamMovement: {x: 0.742, y: 0.05, z: 0.346, w: 0.065}
+  surfaceFoamDirection1: 0.742
+  surfaceFoamDirection2: 0.346
+  surfaceFoamSpeed1: 0.05
+  surfaceFoamSpeed2: 0.065
+  surfaceFoamTilingAndOffset: {x: 0.157, y: 0.617, z: 0.151, w: 0.128}
+  surfaceFoamOffsetX: 0.157
+  surfaceFoamOffsetY: 0.617
+  surfaceFoamScale1: 0.151
+  surfaceFoamScale2: 0.128
+  enableSurfaceFoam: 1
   surfaceFoamHeightMask: 0
   surfaceFoamHeightMaskSmoothness: 0
   enableHeightMask: 0
@@ -230,9 +230,9 @@ MonoBehaviour:
   normalsScale: 1.461
   normalsSpeed: 0.04
   refractionStrength: 0.004
-  waveVisuals: {x: 0.027, y: 6.21, z: 0.906}
-  waveSteepness: 0.027
-  waveLength: 6.21
+  waveVisuals: {x: 0.01, y: 1, z: 0.906}
+  waveSteepness: 0.01
+  waveLength: 1
   waveSpeed: 0.906
   waveDirections: {x: 0.048, y: 0.64, z: 1, w: 0.33}
   waveDirection1: 0.048
@@ -242,10 +242,10 @@ MonoBehaviour:
   waterUVs: 1
   hideComponents: 0
   enableFoamShadows: 1
-  enableRefraction: 1
+  enableRefraction: 0
   meshRenderer: {fileID: 7261468947031537557}
   meshFilter: {fileID: 4033363670591589228}
-  material: {fileID: 2100000, guid: ea66d3ba3c5ac7d498707e8c9e54524f, type: 2}
+  material: {fileID: 2100000, guid: c019b9bbe6acea9438a44c7d8ca9c2da, type: 2}
 --- !u!65 &7693099968472579522
 BoxCollider:
   m_ObjectHideFlags: 0
