@@ -1,26 +1,19 @@
 ﻿<Properties StartupConfiguration="{0706B208-03BB-314A-F0D3-D6FB5C0C888A}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/water.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Fire.cs">
     <Files>
-      <File FileName="Assets/Scripts/Fire.cs" Line="9" Column="38" />
-      <File FileName="Assets/Scripts/water.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Fire.cs" Line="13" Column="10" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
-          <Node name="Dungeon Crab" expanded="True">
-            <Node name="Assets" expanded="True">
-              <Node name="Scripts" expanded="True">
-                <Node name="water.cs" selected="True" />
-              </Node>
-            </Node>
-          </Node>
+          <Node />
         </State>
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="cdc0197b-8110-4605-a349-2a8677a306d9" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="003bb642-3268-4411-8e4d-5283176c9a30" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

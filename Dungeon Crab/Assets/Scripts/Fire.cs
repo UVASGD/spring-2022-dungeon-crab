@@ -2,20 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+//This scipt defines the behavior of fire. It is set to active when meeting other fire and disappear
+//when in contact with water
 public class Fire : MonoBehaviour
 {
-
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("ok");
         if(other.CompareTag("Water"))
         {
-            this.gameObject.SetActive(false);
-            Debug.Log("ok");
+            foreach(Transform child in this.transform)
+            {
+                child.gameObject.SetActive(false);
+            }
         }
         if (other.CompareTag("Fire"))
         {
-            this.gameObject.SetActive(true);
+            foreach (Transform child in this.transform)
+            {
+                child.gameObject.SetActive(true);
+            }
         }
     }
 }
