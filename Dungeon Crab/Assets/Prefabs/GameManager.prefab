@@ -44,3 +44,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   numberOfKeys: 0
+  waterLevel: 0
+  lavaLevel: 0
+  transitionTime: 0.4
