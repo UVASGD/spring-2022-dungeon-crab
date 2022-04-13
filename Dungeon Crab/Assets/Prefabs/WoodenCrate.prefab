@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 3073248170065520708}
   - component: {fileID: 3073248170066489050}
   - component: {fileID: 3073248171681336375}
+  - component: {fileID: 191449091}
   m_Layer: 0
   m_Name: WoodenCrate
   m_TagString: Untagged
@@ -127,6 +128,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   floatingForce: 8
+--- !u!114 &191449091
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3073248170060257246}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce4b29de7fad39545a236c2e7b1add91, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  loopsUntilCleanup: 200
 --- !u!1001 &1782795315
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -210,10 +224,37 @@ PrefabInstance:
       propertyPath: isFireActive
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 7941048399224729527, guid: 313e862f6e13c954c98e8dc78abc715b, type: 3}
+      propertyPath: destroyObject
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7941048399224729527, guid: 313e862f6e13c954c98e8dc78abc715b, type: 3}
+      propertyPath: objectToDestroy
+      value: 
+      objectReference: {fileID: 191449091}
+    m_RemovedComponents:
+    - {fileID: 7941048399224729520, guid: 313e862f6e13c954c98e8dc78abc715b, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 313e862f6e13c954c98e8dc78abc715b, type: 3}
+--- !u!1 &7941048400931857286 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7941048399224729525, guid: 313e862f6e13c954c98e8dc78abc715b, type: 3}
+  m_PrefabInstance: {fileID: 1782795315}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7941048400931857285 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7941048399224729526, guid: 313e862f6e13c954c98e8dc78abc715b, type: 3}
   m_PrefabInstance: {fileID: 1782795315}
   m_PrefabAsset: {fileID: 0}
+--- !u!65 &138330472
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7941048400931857286}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.9, y: 0.9, z: 0.9}
+  m_Center: {x: 0, y: 0, z: 0}
