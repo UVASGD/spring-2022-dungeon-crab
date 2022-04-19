@@ -1002,7 +1002,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3073248170059954240, guid: db4cbbdf2369103439c8d70f44364777, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.65
+      value: -3.03
       objectReference: {fileID: 0}
     - target: {fileID: 3073248170059954240, guid: db4cbbdf2369103439c8d70f44364777, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1010,7 +1010,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3073248170059954240, guid: db4cbbdf2369103439c8d70f44364777, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -4.33
+      value: -2.2
       objectReference: {fileID: 0}
     - target: {fileID: 3073248170059954240, guid: db4cbbdf2369103439c8d70f44364777, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1283,7 +1283,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isActive: 1
   numThingsOnButton: 0
+  buttonOpensGrate: 0
   grate: {fileID: 765873829}
+  tagDoesntTriggerButton: []
 --- !u!65 &491585225
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2079,12 +2081,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 765873828}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d03fc4491435454592ed580156664b9, type: 3}
+  m_Script: {fileID: 11500000, guid: 2dd0578a776cb4cf7aed75e6859674b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   currentlyOpen: 0
   opening: 0
-  countdown: 100
+  closing: 0
+  fullyOpenedDoorNum: 0
+  fullyClosedDoorNum: 10
+  countdown: 10
 --- !u!1001 &780665593
 PrefabInstance:
   m_ObjectHideFlags: 0
