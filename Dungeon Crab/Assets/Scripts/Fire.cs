@@ -77,6 +77,11 @@ public class Fire : MonoBehaviour
             {
                 ReLight();
             }
+            playerFire otherFire2 = other.GetComponent<playerFire>();
+            if (otherFire2 != null && otherFire2.isFireActive)
+            {
+                ReLight();
+            }
         }
         if (other.CompareTag("Lava") && !isFireActive)
         {
