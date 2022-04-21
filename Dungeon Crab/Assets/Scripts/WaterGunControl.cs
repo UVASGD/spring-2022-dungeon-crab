@@ -5,62 +5,76 @@ using UnityEngine;
 public class WaterGunControl : MonoBehaviour
 {
     public GameObject WaterGun;
+    public GameObject WaterGunModel;
     public float coolDownTime = 1;
     public float spawnDistance = 0.2f;
     public float spawnSpeed = 0f;
     public float coolDown = 0;
     public float spread = 1f;
 
+    private GameManager gm;
+    private CharacterController thisPlayerController;
     private bool keyDown = false;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        thisPlayerController = GetComponent<CharacterController>();
+        gm = GameManager.instance;
+        if (!gm.waterGunUnlocked)
+        {
+            WaterGunModel.SetActive(false);
+        }
     }
 
     // Update is called once per frame
     private void Update()
     {
-        if (Input.GetKey(KeyCode.RightShift))
+        if (gm.waterGunUnlocked)
         {
-            keyDown = true;
-        }
-        else
-        {
-            keyDown = false;
-        }
+            if (Input.GetKey(KeyCode.RightShift))
+            {
+                keyDown = true;
+            }
+            else
+            {
+                keyDown = false;
+            }
 
-        if (keyDown && coolDown <= 0f)
-        {
-            //Collider[] hitColliders = Physics.OverlapSphere(transform.position + transform.position * spawnDistance, radius);
-            //if(hitColliders.Length < 1)
-            //{ Quaternion.Euler()
-            //for (float i = 0; i < 4; i+=1f)
-            //{
-                GameObject water = (GameObject)Instantiate(WaterGun, transform.position + transform.forward * spawnDistance * (4/4), transform.rotation);
+            if (keyDown && coolDown <= 0f)
+            {
+                // shoot out water
+                GameObject water = (GameObject)Instantiate(WaterGun, transform.position + transform.forward * spawnDistance + new Vector3(0, 0.05f, 0f), transform.rotation);
                 Rigidbody rb;
                 if ((rb = water.GetComponent<Rigidbody>()) != null)
                 {
-                    rb.velocity = (new Vector3(Random.Range(transform.forward.x + spread, transform.forward.x - spread), Random.Range(transform.forward.y + spread, transform.forward.y - spread), Random.Range(transform.forward.z + spread, transform.forward.z - spread)).normalized + new Vector3(0, 0.3f, 0)) * spawnSpeed * Random.Range(0.9f,1.1f);
+                    rb.velocity = (new Vector3(Random.Range(transform.forward.x + spread, transform.forward.x - spread), Random.Range(transform.forward.y + spread, transform.forward.y - spread), Random.Range(transform.forward.z + spread, transform.forward.z - spread)).normalized + new Vector3(0, 0.3f, 0)) * spawnSpeed * Random.Range(0.9f, 1.1f);
                 }
                 coolDown = coolDownTime;
-            //}
-            //}
-            
-            /*
-            Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            
-            nextSpark.SendMessage("setupDir", nextDirection);
-            nextSpark.SendMessage("setupSpark", spark);
-            nextSpark.SendMessage("setupIntense", 150);
-            nextSpark.SendMessage("setJoint");*/
-            
+
+
+                /*
+                Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+                nextSpark.SendMessage("setupDir", nextDirection);
+                nextSpark.SendMessage("setupSpark", spark);
+                nextSpark.SendMessage("setupIntense", 150);
+                nextSpark.SendMessage("setJoint");*/
+
+            }
+
+            if (coolDown > 0f)
+            {
+                coolDown -= Time.deltaTime;
+            }
         }
 
-        if(coolDown > 0f)
-        {
-            coolDown-= Time.deltaTime;
-        }
+    }
+
+    // call this to make the water gun work
+    public void getWaterGun()
+    {
+        gm.waterGunUnlocked = true;
+        WaterGunModel.SetActive(true);
     }
 }

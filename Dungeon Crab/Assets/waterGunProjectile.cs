@@ -6,10 +6,12 @@ public class waterGunProjectile : MonoBehaviour
 {
     bool destroy = false;
     float timeToDestroy = 0.15f;
+    float pushPower = 0.8f;
+    Rigidbody rb;
     // Start is called before the first frame update
     void Start()
     {
-        
+        rb = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
@@ -17,8 +19,9 @@ public class waterGunProjectile : MonoBehaviour
     {
         if (destroy)
         {
-            timeToDestroy -= Time.deltaTime;
+            
             this.transform.localScale -= new Vector3(transform.localScale.x * Time.deltaTime / timeToDestroy, transform.localScale.x * Time.deltaTime / timeToDestroy, transform.localScale.x * Time.deltaTime / timeToDestroy);
+            timeToDestroy -= Time.deltaTime;
         }
     }
     private void FixedUpdate()
@@ -33,6 +36,17 @@ public class waterGunProjectile : MonoBehaviour
         if(other.tag != "Player" && other.isTrigger == false)
         {
             destroy = true;
+
+            // push anything with a rigidbody
+            Rigidbody body;
+            if ((body = other.GetComponent<Rigidbody>()) != null)
+            {
+                if (body.isKinematic)
+                    return;
+                Vector3 pushDir = new Vector3(rb.velocity.x, 0, rb.velocity.z);
+                body.velocity = pushDir * pushPower;
+            }
+            
         }
     }
 }

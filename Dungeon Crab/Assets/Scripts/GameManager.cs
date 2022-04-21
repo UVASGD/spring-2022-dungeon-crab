@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
     public int lavaLevel = 0;
     public float transitionTime = 0.2f;
     public string lastSceneName = null;
+    public bool waterGunUnlocked = false;
     private void Awake()
     {
         // this is the code to ensure there's only one gameManager in a scene at a time
