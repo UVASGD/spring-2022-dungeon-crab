@@ -43,5 +43,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af7c312869f13ee4d91f36af7922d341, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sounds: []
+  sounds:
+  - name: Open Door
+    clip: {fileID: 8300000, guid: 943673c2e3e1c4147848fe25644bed2b, type: 3}
+    volume: 0.5
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Moving Block
+    clip: {fileID: 8300000, guid: 71c74c6c4406cda40827863c44264922, type: 3}
+    volume: 0.5
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Thump
+    clip: {fileID: 8300000, guid: 4e13e1560c9559d4991607fcbc4a69a0, type: 3}
+    volume: 0.3
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: 
+    clip: {fileID: 0}
+    volume: 0
+    pitch: 0
+    loop: 0
+    source: {fileID: 0}
   muted: 0
