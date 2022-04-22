@@ -8,6 +8,7 @@ public class waterGunProjectile : MonoBehaviour
     float timeToDestroy = 0.15f;
     float pushPower = 0.8f;
     Rigidbody rb;
+    public ParticleSystem smoke = null;
     // Start is called before the first frame update
     void Start()
     {
@@ -33,7 +34,7 @@ public class waterGunProjectile : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag != "Player" && other.isTrigger == false)
+        if(other.tag != "Player" && (other.isTrigger == false || other.tag=="Lava"))
         {
             destroy = true;
 
@@ -47,6 +48,10 @@ public class waterGunProjectile : MonoBehaviour
                 body.velocity = pushDir * pushPower;
             }
             
+            if(other.tag=="Lava" && smoke != null)
+            {
+                smoke.Play();
+            }
         }
     }
 }

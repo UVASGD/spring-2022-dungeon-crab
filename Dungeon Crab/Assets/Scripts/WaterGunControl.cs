@@ -41,7 +41,7 @@ public class WaterGunControl : MonoBehaviour
                 keyDown = false;
             }
 
-            if (keyDown && coolDown <= 0f)
+            if (keyDown && coolDown <= 0f && gm.waterGunAmmo > 0)
             {
                 // shoot out water
                 GameObject water = (GameObject)Instantiate(WaterGun, transform.position + transform.forward * spawnDistance + new Vector3(0, 0.05f, 0f), transform.rotation);
@@ -51,7 +51,7 @@ public class WaterGunControl : MonoBehaviour
                     rb.velocity = (new Vector3(Random.Range(transform.forward.x + spread, transform.forward.x - spread), Random.Range(transform.forward.y + spread, transform.forward.y - spread), Random.Range(transform.forward.z + spread, transform.forward.z - spread)).normalized + new Vector3(0, 0.3f, 0)) * spawnSpeed * Random.Range(0.9f, 1.1f);
                 }
                 coolDown = coolDownTime;
-
+                gm.waterGunAmmo--;
 
                 /*
                 Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -76,5 +76,13 @@ public class WaterGunControl : MonoBehaviour
     {
         gm.waterGunUnlocked = true;
         WaterGunModel.SetActive(true);
+    }
+
+    public void OnTriggerEnter(Collider other)
+    {
+        if(other.tag == "Water")
+        {
+            gm.waterGunAmmo = 50;
+        }
     }
 }
