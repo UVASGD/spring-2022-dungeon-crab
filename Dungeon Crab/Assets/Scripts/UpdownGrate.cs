@@ -3,31 +3,31 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // This script is attatched to the grate that opens up and down.
-public class UpDownGrate : MonoBehaviour
+public class UpDownGrate : Grate
 {
     
     public bool currentlyOpen = false;
     public bool opening = false;
     public bool closing = false;
 
-    public int fullyOpenedDoorNum = 0;
-    public int fullyClosedDoorNum = 10;
+    public int endPositionNum = 10;
+    public int startPositionNum = 0;
 
-    public int countdown = 10;
+    public int count = 0;
 
     // Start is called before the first frame update
     void Start()
     {
     }
 
-    public void close()
+    public override void close()
     {
         //Starts the closing process
         opening = false;
         closing = true;
     }
 
-    public void open()
+    public override void open()
     {
         opening = true;
         closing = false;
@@ -37,10 +37,10 @@ public class UpDownGrate : MonoBehaviour
     void FixedUpdate()
     {
         //General Opening Process
-        if (opening && countdown > fullyOpenedDoorNum) //Opens door if open is called when partially closed
+        if (opening && count < endPositionNum) //Opens door if open is called when partially closed
         {
             transform.position += new Vector3(0, 10f * Time.deltaTime, 0);
-            countdown--;
+            count++;
         }
         else if (opening) //Finished Opening
         {
@@ -49,10 +49,10 @@ public class UpDownGrate : MonoBehaviour
         }
 
         //General Closing Process
-        if (closing && countdown < fullyClosedDoorNum) //Closes door if close is called when partially open
+        if (closing && count > startPositionNum) //Closes door if close is called when partially open
         {
             transform.position += new Vector3(0, -10f * Time.deltaTime, 0);
-            countdown++;
+            count--;
         }
         else if (closing) //Finished Closing
         {
@@ -61,9 +61,9 @@ public class UpDownGrate : MonoBehaviour
         }
 
         //General Intertia - Grate Closes in Absense of triggers
-        if (!opening && !closing && !currentlyOpen && countdown < fullyClosedDoorNum) {
+        if (!opening && !closing && !currentlyOpen && count > startPositionNum) {
             transform.position += new Vector3(0, -10f * Time.deltaTime, 0);
-            countdown++;
+            count--;
         }
         else if (!opening && !closing && !currentlyOpen) //Finished Closing
         {

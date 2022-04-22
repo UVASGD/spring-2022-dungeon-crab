@@ -7,7 +7,8 @@ public class buttonScript : MonoBehaviour
     public bool isActive; //Boolean that controls whether the button is active
     public int numThingsOnButton = 0; //Number of items on the button
     public bool buttonOpensGrate = true; //Whether the button opens or closes the grate
-    public UpDownGrate grate; //Grate controlled by the button
+
+    public List<Grate> grateList = new List<Grate>(); //List of Grates controlled by the button
 
     //List of Tags that cannot trigger the button
     //TODO: Should this instead be a list of items that do trigger the button?
@@ -27,14 +28,7 @@ public class buttonScript : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        //Break method if the button isn't active for safety
-        if (!isActive)
-        {
-            return;
-        }
-
-        //don't trigger if tag is in list, for example, fire in crates don't trigger the button
-        if (tagDoesntTriggerButton.Contains(other.gameObject.tag))
+        if (!isTriggerActive(other))
         {
             return;
         }
@@ -44,11 +38,11 @@ public class buttonScript : MonoBehaviour
 
             if (buttonOpensGrate)
             {
-                grate.open();
+                openAllGrates();
             }
             else
             {
-                grate.close();
+                closeAllGrates();
             }
         }
         
@@ -57,13 +51,7 @@ public class buttonScript : MonoBehaviour
     private void OnTriggerExit(Collider other) { 
 
         //Break method if the button isn't active for safety
-        if (!isActive)
-        {
-            return;
-        }
-
-        //don't trigger if tag is in list, for example, fire in crates don't trigger the button
-        if (tagDoesntTriggerButton.Contains(other.gameObject.tag))
+        if (!isTriggerActive(other))
         {
             return;
         }
@@ -73,13 +61,38 @@ public class buttonScript : MonoBehaviour
         {
             if (buttonOpensGrate)
             {
-                grate.close();
+                closeAllGrates();
             }
             else {
-                grate.open();
+                openAllGrates();
             }
         }
 
+    }
+
+    private bool isTriggerActive(Collider other) {
+        //Break method if the button isn't active for safety
+        //don't trigger if tag is in list, for example, fire in crates don't trigger the button
+        if (isActive && !tagDoesntTriggerButton.Contains(other.gameObject.tag))
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    private void openAllGrates() {
+        foreach (Grate g in grateList) {
+            g.open();
+        }
+    }
+
+    private void closeAllGrates()
+    {
+        foreach (Grate g in grateList)
+        {
+            g.close();
+        }
     }
 
     /*
