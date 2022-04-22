@@ -6,18 +6,20 @@ public class buttonScript : MonoBehaviour
 {
     public bool isActive; //Boolean that controls whether the button is active
     public int numThingsOnButton = 0; //Number of items on the button
-    public bool buttonOpensGrate = true; //Whether the button opens or closes the grate
 
+    public bool buttonOpensGrate = true; //Whether the button opens or closes the grate
     public List<Grate> grateList = new List<Grate>(); //List of Grates controlled by the button
+
+    public bool buttonActivatesPlatform = true;
+    public List<MovePlatform> platformList = new List<MovePlatform>(); //List of Platforms controlled by the button
 
     //List of Tags that cannot trigger the button
     //TODO: Should this instead be a list of items that do trigger the button?
-    public List<string> tagDoesntTriggerButton = new List<string>();
+    private List<string> tagDoesntTriggerButton = new List<string> { "Fire" };
 
     // Start is called before the first frame update
     void Start()
     {
-        tagDoesntTriggerButton.Add("Fire");
     }
 
     // Update is called once per frame
@@ -44,6 +46,14 @@ public class buttonScript : MonoBehaviour
             {
                 closeAllGrates();
             }
+
+            if (buttonActivatesPlatform)
+            {
+                activateAllPlatforms();
+            }
+            else {
+                deactivateAllPlatforms();
+            }
         }
         
     }
@@ -66,6 +76,16 @@ public class buttonScript : MonoBehaviour
             else {
                 openAllGrates();
             }
+
+            if (buttonActivatesPlatform)
+            {
+                deactivateAllPlatforms();
+            }
+            else
+            {
+                activateAllPlatforms();
+            }
+
         }
 
     }
@@ -95,14 +115,20 @@ public class buttonScript : MonoBehaviour
         }
     }
 
-    /*
-    IEnumerator Reset()
+    private void activateAllPlatforms()
     {
-        //Code to prevent trigger from calling multiple times on objects
-        //https://answers.unity.com/questions/738991/ontriggerenter-being-called-multiple-times-in-succ.html 
-        yield return new WaitForEndOfFrame();
-        isColliding = false;
+        foreach (MovePlatform p in platformList)
+        {
+            p.activate();
+        }
+    }
 
-        //Doesn't seem to work if one object has two colliding features. 
-    }*/
+    private void deactivateAllPlatforms()
+    {
+        foreach (MovePlatform p in platformList)
+        {
+            p.deactivate();
+        }
+    }
+
 }
