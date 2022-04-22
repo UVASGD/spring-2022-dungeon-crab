@@ -13,7 +13,14 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
     public int numberOfKeys = 0;
     public int waterLevel = 0;
+    public int lavaLevel = 0;
     public float transitionTime = 0.2f;
+    public string lastSceneName = null;
+    public bool waterGunUnlocked = false;
+    public int waterGunAmmo = 50;
+    public List<string> burnedThings = new List<string>();   // list of the ids all of the burned things that need to stay burned between scenes (mostly door boards)
+    private AudioManager am = null;
+    bool restarting = false;
     private void Awake()
     {
         // this is the code to ensure there's only one gameManager in a scene at a time
@@ -33,12 +40,23 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         Application.targetFrameRate = 60;
+        if(AudioManager.instance != null)
+        {
+            am = AudioManager.instance;
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKey(KeyCode.R))
+        {
+            if (!restarting)
+            {
+                restarting = true;
+                RestartScene();
+            }
+        }
     }
     //returns the number of keys the player currently has.
     public int getKeys()
@@ -61,10 +79,23 @@ public class GameManager : MonoBehaviour
         waterLevel = level;
         return true;
     }
+    public bool setLavaLevel(int level)
+    {
+        if (lavaLevel == level)
+        {
+            return false;
+        }
+        lavaLevel = level;
+        return true;
+    }
 
     //useKey: if the player has any keys, lose one key and return true. If the player has no keys, return false.
     public bool useKey()
     {
+        if (am != null)
+        {
+            am.Play("Open Door");
+        }
         if (numberOfKeys > 0)
         {
             numberOfKeys--;
@@ -78,7 +109,22 @@ public class GameManager : MonoBehaviour
 
     public void loadLevel(string sceneName)
     {
+        lastSceneName = SceneManager.GetActiveScene().name;
+        ScreenFade sf = FindObjectOfType<ScreenFade>();
+        if (sf)
+        {
+            sf.FadeOut();
+        }
         StartCoroutine(LoadLevelFromName(sceneName));
+    }
+    public void RestartScene()
+    {
+        ScreenFade sf = FindObjectOfType<ScreenFade>();
+        if (sf)
+        {
+            sf.FadeOut();
+        }
+        StartCoroutine(LoadLevelFromName(SceneManager.GetActiveScene().name));
     }
 
     IEnumerator LoadLevelFromName(string sceneName)
@@ -88,5 +134,6 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(transitionTime);
 
         SceneManager.LoadScene(sceneName);
+        restarting = false;
     }
 }
