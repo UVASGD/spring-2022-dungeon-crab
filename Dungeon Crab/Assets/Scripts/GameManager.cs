@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
     public string lastSceneName = null;
     public bool waterGunUnlocked = false;
     public int waterGunAmmo = 50;
-    public List<string> burnedThings;   // list of the ids all of the burned things that need to stay burned between scenes (mostly door boards)
+    public List<string> burnedThings = new List<string>();   // list of the ids all of the burned things that need to stay burned between scenes (mostly door boards)
     private AudioManager am = null;
     bool restarting = false;
     private void Awake()
