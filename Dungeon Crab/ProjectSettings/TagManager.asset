@@ -9,6 +9,7 @@ TagManager:
   - Fire
   - Coals
   - Grate
+  - Ladder
   layers:
   - Default
   - TransparentFX
