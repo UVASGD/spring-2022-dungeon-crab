@@ -14,6 +14,10 @@ public class MovePlatform : MonoBehaviour
 
     public bool isActive = true;
 
+    private playermovement character;
+    public Vector3 moveDirection;
+    public bool characterOnPlatform = false;
+
     void Start()
     {
         rBody = GetComponent<Rigidbody>();
@@ -46,12 +50,15 @@ public class MovePlatform : MonoBehaviour
 
     IEnumerator Vector3LerpCoroutine(GameObject obj, Vector3 target, float speed)
     {
-        Debug.Log("Hello");
         Vector3 startPosition = obj.transform.position;
         float time = 0f;
 
         while (rBody.position != target)
         {
+            moveDirection = rBody.velocity;
+            if (characterOnPlatform && character) {
+                character.externalMoveSpeed = moveDirection;
+            }
             rBody.MovePosition(Vector3.Lerp(startPosition, target, (time / Vector3.Distance(startPosition, target)) * speed));
             time += Time.deltaTime;
             yield return null;
@@ -68,34 +75,32 @@ public class MovePlatform : MonoBehaviour
         isActive = false;
     }
 
-    //This still isn't working :(
     private void OnTriggerEnter(Collider col)
     {
-        if (col.gameObject.tag == "Player") {
-            col.gameObject.transform.SetParent(gameObject.transform, true);
+        if (col.gameObject.tag == "Player")
+        {
+            //col.gameObject.transform.SetParent(gameObject.transform, true);
+            characterOnPlatform = true;
+            if (!character)
+            {
+                character = col.gameObject.GetComponent<playermovement>();
+            }
+
+            character.externalMoveSpeed = moveDirection;
         }
-        
+
+
     }
 
     private void OnTriggerExit(Collider col)
     {
         if (col.gameObject.tag == "Player")
         {
-            col.gameObject.transform.parent = null;
+            characterOnPlatform = false;
+            //col.gameObject.transform.parent = null;
+            character.externalMoveSpeed = Vector3.zero;
         }
     }
+
 }
-
-/*
-
-public class PlatformMovement : MonoBehaviour
-{
     
-
-    
-
-    
-
-    
-}
-*/
