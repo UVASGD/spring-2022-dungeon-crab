@@ -51,4 +51,14 @@ public class floater : MonoBehaviour
         rb.drag = 0;
         rb.angularDrag = 0.05f;
     }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.relativeVelocity.magnitude > 2)
+        {
+            //GetComponent<AudioSource>().Play();
+        }
+    }
+
+
 }

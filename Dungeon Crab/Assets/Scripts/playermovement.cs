@@ -128,7 +128,7 @@ public class playermovement : MonoBehaviour
             return;
 
         // We dont want to push objects below us
-        if (hit.moveDirection.y < -0.3f)
+        if (hit.moveDirection.y < -0.2f)
             return;
 
         // Calculate push direction from move direction,
