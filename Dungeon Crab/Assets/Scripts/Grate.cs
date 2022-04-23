@@ -17,6 +17,7 @@ public class Grate : MonoBehaviour
     private bool closing = false;
 
     // Start is called before the first frame update
+    //Based Off: https://www.monkeykidgc.com/2021/03/unity-moving-platform.html#comments
     void Start()
     {
         rBody = GetComponent<Rigidbody>();
