@@ -37,6 +37,8 @@ public class playermovement : MonoBehaviour
     private bool active = true;
     private bool isOnFire = false;
 
+    public Vector3 externalMoveSpeed = new Vector3(0, 0, 0);
+
     // Start is called before the first frame update
     void Start()
     {
@@ -94,7 +96,11 @@ public class playermovement : MonoBehaviour
 
             velocity.y += gravity * Time.deltaTime;
 
-            controller.Move(velocity * Time.deltaTime);
+
+            //controller.Move(velocity * Time.deltaTime);
+            Vector3 movement = velocity * Time.deltaTime;
+            Vector3 externalMovement = externalMoveSpeed * Time.deltaTime;
+            controller.Move(movement + externalMovement);
 
             //Temporary Things- set water/lava levels with numbers
             if (Input.GetKeyDown(KeyCode.Alpha1))
