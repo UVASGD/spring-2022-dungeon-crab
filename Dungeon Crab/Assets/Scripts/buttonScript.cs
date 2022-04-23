@@ -6,17 +6,20 @@ public class buttonScript : MonoBehaviour
 {
     public bool isActive; //Boolean that controls whether the button is active
     public int numThingsOnButton = 0; //Number of items on the button
+
     public bool buttonOpensGrate = true; //Whether the button opens or closes the grate
-    public UpDownGrate grate; //Grate controlled by the button
+    public List<Grate> grateList = new List<Grate>(); //List of Grates controlled by the button
+
+    public bool buttonActivatesPlatform = true;
+    public List<MovePlatform> platformList = new List<MovePlatform>(); //List of Platforms controlled by the button
 
     //List of Tags that cannot trigger the button
     //TODO: Should this instead be a list of items that do trigger the button?
-    public List<string> tagDoesntTriggerButton = new List<string>();
+    private List<string> tagDoesntTriggerButton = new List<string> { "Fire" };
 
     // Start is called before the first frame update
     void Start()
     {
-        tagDoesntTriggerButton.Add("Fire");
     }
 
     // Update is called once per frame
@@ -27,14 +30,7 @@ public class buttonScript : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        //Break method if the button isn't active for safety
-        if (!isActive)
-        {
-            return;
-        }
-
-        //don't trigger if tag is in list, for example, fire in crates don't trigger the button
-        if (tagDoesntTriggerButton.Contains(other.gameObject.tag))
+        if (!isTriggerActive(other))
         {
             return;
         }
@@ -44,11 +40,19 @@ public class buttonScript : MonoBehaviour
 
             if (buttonOpensGrate)
             {
-                grate.open();
+                openAllGrates();
             }
             else
             {
-                grate.close();
+                closeAllGrates();
+            }
+
+            if (buttonActivatesPlatform)
+            {
+                activateAllPlatforms();
+            }
+            else {
+                deactivateAllPlatforms();
             }
         }
         
@@ -57,13 +61,7 @@ public class buttonScript : MonoBehaviour
     private void OnTriggerExit(Collider other) { 
 
         //Break method if the button isn't active for safety
-        if (!isActive)
-        {
-            return;
-        }
-
-        //don't trigger if tag is in list, for example, fire in crates don't trigger the button
-        if (tagDoesntTriggerButton.Contains(other.gameObject.tag))
+        if (!isTriggerActive(other))
         {
             return;
         }
@@ -73,23 +71,64 @@ public class buttonScript : MonoBehaviour
         {
             if (buttonOpensGrate)
             {
-                grate.close();
+                closeAllGrates();
             }
             else {
-                grate.open();
+                openAllGrates();
             }
+
+            if (buttonActivatesPlatform)
+            {
+                deactivateAllPlatforms();
+            }
+            else
+            {
+                activateAllPlatforms();
+            }
+
         }
 
     }
 
-    /*
-    IEnumerator Reset()
-    {
-        //Code to prevent trigger from calling multiple times on objects
-        //https://answers.unity.com/questions/738991/ontriggerenter-being-called-multiple-times-in-succ.html 
-        yield return new WaitForEndOfFrame();
-        isColliding = false;
+    private bool isTriggerActive(Collider other) {
+        //Break method if the button isn't active for safety
+        //don't trigger if tag is in list, for example, fire in crates don't trigger the button
+        if (isActive && !tagDoesntTriggerButton.Contains(other.gameObject.tag))
+        {
+            return true;
+        }
 
-        //Doesn't seem to work if one object has two colliding features. 
-    }*/
+        return false;
+    }
+
+    private void openAllGrates() {
+        foreach (Grate g in grateList) {
+            g.open();
+        }
+    }
+
+    private void closeAllGrates()
+    {
+        foreach (Grate g in grateList)
+        {
+            g.close();
+        }
+    }
+
+    private void activateAllPlatforms()
+    {
+        foreach (MovePlatform p in platformList)
+        {
+            p.activate();
+        }
+    }
+
+    private void deactivateAllPlatforms()
+    {
+        foreach (MovePlatform p in platformList)
+        {
+            p.deactivate();
+        }
+    }
+
 }
