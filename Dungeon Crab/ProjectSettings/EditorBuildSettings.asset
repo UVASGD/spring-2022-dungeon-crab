@@ -12,7 +12,7 @@ EditorBuildSettings:
     path: Assets/Scenes/Scene 2.unity
     guid: b8c5987f25fbb1943838d45e140f3a32
   - enabled: 1
-    path: Assets/Scenes/Lava Test.unity
+    path: Assets/Scenes/Catherine Scene.unity
     guid: d72b337f0f1b8ee46b315ec8d77c8a40
   - enabled: 1
     path: Assets/Scenes/Transition test.unity

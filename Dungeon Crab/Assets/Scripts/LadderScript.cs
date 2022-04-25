@@ -48,7 +48,7 @@ public class LadderScript : MonoBehaviour
         }
         if (inside == true && keyDown == true)
         {
-            Debug.Log("Test");
+            
             MoveInput.enabled = false;
             this.transform.position += Vector3.up / speed;
         }
