@@ -14,22 +14,24 @@ public class lever : MonoBehaviour
     private float speed = 0.3f;
     private float timeCount = 0.0f;
     private Quaternion targetRotation;
+    private float originalZ;
 
     // Start is called before the first frame update
     void Start()
     {
         //set up everything
         gm = GameManager.instance;
+        originalZ = transform.rotation.eulerAngles.z + 45;
         if (leverIsForWater)
         {
             lastLevel = gm.waterLevel;
             if (gm.waterLevel == 0)
             {
-                leverFulcrum.localRotation = Quaternion.Euler(0, 0, 45);
+                leverFulcrum.localRotation = Quaternion.Euler(0, 0, originalZ - 90f);
             }
             else
             {
-                leverFulcrum.localRotation = Quaternion.Euler(0, 0, -45);
+                leverFulcrum.localRotation = Quaternion.Euler(0, 0, originalZ);
             }
         }
         else
@@ -37,11 +39,11 @@ public class lever : MonoBehaviour
             lastLevel = gm.lavaLevel;
             if (gm.lavaLevel == 0)
             {
-                leverFulcrum.localRotation = Quaternion.Euler(0, 0, 45);
+                leverFulcrum.localRotation = Quaternion.Euler(0, 0, originalZ - 90f);
             }
             else
             {
-                leverFulcrum.localRotation = Quaternion.Euler(0, 0, -45);
+                leverFulcrum.localRotation = Quaternion.Euler(0, 0, originalZ);
             }
         }
     }
@@ -98,11 +100,11 @@ public class lever : MonoBehaviour
         //move the fulrum of the lever to match whatever the water/lava level is (using a lerp)
         if ((leverIsForWater && gm.waterLevel == 1) || (!leverIsForWater && gm.lavaLevel == 1))
         {
-            targetRotation = Quaternion.Euler(leverFulcrum.rotation.x, leverFulcrum.rotation.y, -45f);
+            targetRotation = Quaternion.Euler(leverFulcrum.rotation.x, leverFulcrum.rotation.y,  originalZ - 90f);
         }
         else
         {
-            targetRotation = Quaternion.Euler(leverFulcrum.rotation.x, leverFulcrum.rotation.y, 45f);
+            targetRotation = Quaternion.Euler(leverFulcrum.rotation.x, leverFulcrum.rotation.y, originalZ);
         }
         leverFulcrum.rotation = Quaternion.Lerp(leverFulcrum.rotation, targetRotation, timeCount * speed);
         timeCount = timeCount + Time.deltaTime;
