@@ -10,17 +10,36 @@ using UnityEngine.SceneManagement;
 // to carry over between scenes (ie number of keys, player health), use the Game Manager to store that information.
 public class GameManager : MonoBehaviour
 {
+    //static reference to the current GameManager- can be accessed from anywhere with GameManager.instance
     public static GameManager instance;
+
+    //information that's stored between scenes on number of keys the player currently has, water/lava levels
     public int numberOfKeys = 0;
     public int waterLevel = 0;
     public int lavaLevel = 0;
+
+    //time to transition between scenes
     public float transitionTime = 0.2f;
+    
+    //information about the last level name and the water/lava from before this scene began, used for spawning logic between scenes
     public string lastSceneName = null;
+    public int lastWaterLevel = 0;
+    public int lastLavaLevel = 0;
+
+    // stores info about whether the player has unlocked the water gun, their current ammo
     public bool waterGunUnlocked = false;
     public int waterGunAmmo = 50;
-    public List<string> burnedThings = new List<string>();   // list of the ids all of the burned things that need to stay burned between scenes (mostly door boards)
+
+    // list of the ids all of the burned things that need to stay burned between scenes (mostly door boards)
+    public List<string> burnedThings = new List<string>();
+
+    //List of all the key objects that a player has collected already that need to stay collected
+    public List<string> keysCollected = new List<string>();
+
+    //private things used in this script
     private AudioManager am = null;
     bool restarting = false;
+
     private void Awake()
     {
         // this is the code to ensure there's only one gameManager in a scene at a time
@@ -79,6 +98,7 @@ public class GameManager : MonoBehaviour
         waterLevel = level;
         return true;
     }
+    //set the lava level to a given int value. Lava objects will look for the lava level to determine if they need to raise/lower.
     public bool setLavaLevel(int level)
     {
         if (lavaLevel == level)
@@ -109,21 +129,32 @@ public class GameManager : MonoBehaviour
 
     public void loadLevel(string sceneName)
     {
+        //set water/lava backups so they're remembered on reload
+        lastWaterLevel = waterLevel;
+        lastLavaLevel = lavaLevel;
+        // save this scene name for spawning logic
         lastSceneName = SceneManager.GetActiveScene().name;
+        // fade out
         ScreenFade sf = FindObjectOfType<ScreenFade>();
         if (sf)
         {
             sf.FadeOut();
         }
+        // load level
         StartCoroutine(LoadLevelFromName(sceneName));
     }
     public void RestartScene()
     {
+        //set water/lava back to what they were when the scene began
+        waterLevel = lastWaterLevel;
+        lavaLevel = lastLavaLevel;
+        //fade out
         ScreenFade sf = FindObjectOfType<ScreenFade>();
         if (sf)
         {
             sf.FadeOut();
         }
+        //restart level
         StartCoroutine(LoadLevelFromName(SceneManager.GetActiveScene().name));
     }
 

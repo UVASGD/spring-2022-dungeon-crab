@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Audio;
 using System;
 
-//This script is for the Audio Manager, the prefab that handles playing sounds and music. Notably, this is directly from Brackey's cideo on Sound in Unity.
+//This script is for the Audio Manager, the prefab that handles playing sounds and music. Notably, this is directly from Brackey's video on Sound in Unity.
 public class AudioManager : MonoBehaviour
 {
     public Sound[] sounds;
