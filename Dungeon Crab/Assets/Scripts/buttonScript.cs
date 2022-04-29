@@ -35,6 +35,8 @@ public class buttonScript : MonoBehaviour
             return;
         }
 
+        Debug.Log(other.gameObject.name);
+
         numThingsOnButton++;
         if (numThingsOnButton > 0){
 
@@ -50,9 +52,11 @@ public class buttonScript : MonoBehaviour
             if (buttonActivatesPlatform)
             {
                 activateAllPlatforms();
+                Debug.Log(other.gameObject.name + " Enters: Activating");
             }
             else {
                 deactivateAllPlatforms();
+                Debug.Log(other.gameObject.name + " Enters: Dectivating");
             }
         }
         
@@ -80,10 +84,12 @@ public class buttonScript : MonoBehaviour
             if (buttonActivatesPlatform)
             {
                 deactivateAllPlatforms();
+                Debug.Log(other.gameObject.name + " Exits: Deactivating");
             }
             else
             {
                 activateAllPlatforms();
+                Debug.Log(other.gameObject.name + " Exits: Activating");
             }
 
         }
