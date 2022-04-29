@@ -23,6 +23,7 @@ public class MovePlatform : MonoBehaviour
         rBody = GetComponent<Rigidbody>();
         startPosition = platformPathStart.transform.position;
         endPosition = platformPathEnd.transform.position;
+        rBody.MovePosition(platformPathStart.transform.position);
         if (isActive)
         {
             StartCoroutine(Vector3LerpCoroutine(gameObject, endPosition, speed));
