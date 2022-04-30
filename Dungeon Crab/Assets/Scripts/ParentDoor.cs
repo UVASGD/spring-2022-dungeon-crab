@@ -17,15 +17,20 @@ public class ParentDoor : MonoBehaviour
     void Start()
     {
         gm = GameManager.instance;
-        playerDetect = GetComponent<BoxCollider>();
     }
 
     public void open()
     {
         opening = true;
-        playerDetect.enabled = false;
         thelock.SetActive(false);
         ps.SetActive(true);
+    }
+
+    public void startOpen()
+    {
+        thelock.SetActive(false);
+        currentlyOpen = true;
+        transform.Rotate(0, countdown, 0);
     }
 
     // Update is called once per frame

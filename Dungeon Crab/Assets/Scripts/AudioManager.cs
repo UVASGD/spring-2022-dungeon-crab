@@ -8,10 +8,11 @@ using System;
 public class AudioManager : MonoBehaviour
 {
     public Sound[] sounds;
-    // Start is called before the first frame update
     public static AudioManager instance;
     public bool muted = false;
-    //private bool wait = false;
+    private bool wait = false;
+    private bool wait2 = false;
+    private bool onTheme2 = false;
     private void Awake()
     {
         if (instance == null)
@@ -36,31 +37,54 @@ public class AudioManager : MonoBehaviour
     }
     void Start()
     {
-        //Play("Theme");        //uncomment this to play Theme song once we have a theme song lol (must add the song to the prefab in the inspector to start)
+        Play("Theme1");        //uncomment this to play Theme song once we have a theme song lol (must add the song to the prefab in the inspector to start)
     }
     private void Update()
     {
         //functionality to mute the music when pressing m- uncomment when theme is implemented
-        /*
         if (Input.GetKeyDown(KeyCode.M) && !wait)
         {
             wait = true;
             if (!muted)
             {
                 muted = true;
-                Stop("Theme");
+                if (onTheme2)
+                {
+                    Stop("Theme2");
+                }
+                else
+                {
+                    Stop("Theme1");
+                }
+                
             }
             else
             {
                 muted = false;
-                Play("Theme");
+                if (onTheme2)
+                {
+                    Play("Theme2");
+                }
+                else
+                {
+                    Play("Theme1");
+                }
+                
             }
         }
         if (Input.GetKeyUp(KeyCode.M))
         {
             wait = false;
         }
-        */
+        if (Input.GetKeyDown(KeyCode.N) && !wait)
+        {
+            wait2 = true;
+            switchTheme();
+        }
+        if (Input.GetKeyUp(KeyCode.N))
+        {
+            wait2 = false;
+        }
     }
 
     // Update is called once per frame
@@ -73,6 +97,28 @@ public class AudioManager : MonoBehaviour
             return;
         }
         s.source.Play();
+    }
+
+    public void switchTheme()
+    {
+        if (onTheme2)
+        {
+            if (!muted)
+            {
+                Stop("Theme2");
+                Play("Theme1");
+            }
+            onTheme2 = false;
+        }
+        else
+        {
+            if (!muted)
+            {
+                Stop("Theme1");
+                Play("Theme2");
+            }
+            onTheme2 = true;
+        }
     }
 
     public void Stop(string name)

@@ -15,6 +15,7 @@ public class WaterGunControl : MonoBehaviour
     private GameManager gm;
     private CharacterController thisPlayerController;
     private bool keyDown = false;
+    private bool leftKeyDown = false;
 
     // Start is called before the first frame update
     void Start()
@@ -40,8 +41,16 @@ public class WaterGunControl : MonoBehaviour
             {
                 keyDown = false;
             }
+            if (Input.GetKey(KeyCode.LeftShift))
+            {
+                leftKeyDown = true;
+            }
+            else
+            {
+                leftKeyDown = false;
+            }
 
-            if (keyDown && coolDown <= 0f && gm.waterGunAmmo > 0)
+            if ((keyDown || leftKeyDown) && coolDown <= 0f && gm.waterGunAmmo > 0)
             {
                 // shoot out water
                 GameObject water = (GameObject)Instantiate(WaterGun, transform.position + transform.forward * spawnDistance + new Vector3(0, 0.05f, 0f), transform.rotation);
@@ -82,7 +91,7 @@ public class WaterGunControl : MonoBehaviour
     {
         if(other.tag == "Water")
         {
-            gm.waterGunAmmo = 50;
+            GameManager.instance.waterGunAmmo = 50;
         }
     }
 }

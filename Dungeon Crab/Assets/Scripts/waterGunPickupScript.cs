@@ -10,6 +10,10 @@ public class waterGunPickupScript : MonoBehaviour
     void Start()
     {
         gm = FindObjectOfType<GameManager>();
+        if (gm.waterGunUnlocked)
+        {
+            gameObject.SetActive(false);
+        }
     }
 
     // rotating animation
@@ -27,6 +31,7 @@ public class waterGunPickupScript : MonoBehaviour
             if ((wgc = other.GetComponent<WaterGunControl>()) != null)
             {
                 wgc.getWaterGun();
+                AudioManager.instance.Play("Pickup");
             }
             gameObject.SetActive(false);
         }

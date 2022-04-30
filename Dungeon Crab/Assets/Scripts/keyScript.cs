@@ -9,10 +9,8 @@ public class keyScript : MonoBehaviour
     //this id is used in the game manager to keep track of which keys have been collected already
     private string id;
     // Start is called before the first frame update
-    private GameManager gm;
     void Start()
     {
-        gm = FindObjectOfType<GameManager>();
         id = SceneManager.GetActiveScene().name + this.transform.ToString();
         // if this key has already been collected, destroy it
         if (GameManager.instance.keysCollected.Contains(id) == true)
@@ -32,7 +30,7 @@ public class keyScript : MonoBehaviour
     {
         if(other.gameObject.tag == "Player")
         {
-            gm.keyObtained();
+            GameManager.instance.keyObtained();
             if (GameManager.instance.keysCollected.Contains(id) == false)
             {
                 GameManager.instance.keysCollected.Add(id);

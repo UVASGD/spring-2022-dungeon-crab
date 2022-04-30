@@ -25,6 +25,8 @@ public class Fire : MonoBehaviour
     private int loopsBeforeFire;
     private bool onCoals = false;
 
+    public int loopsUntilCleanup = 200; //loops after destroying an object before deleting oneself
+
     private void Start()
     {
         loopsBeforeFire = loopsBeforeFireStartsOnCoals;
@@ -132,6 +134,18 @@ public class Fire : MonoBehaviour
     }
     private void FixedUpdate()
     {
+        // delete self once thing has burned up and the animation is done
+        if (destroyed)
+        {
+            loopsUntilCleanup--;
+            if(loopsUntilCleanup < 0)
+            {
+                Destroy(this.gameObject);
+            }
+            return;
+        }
+
+        // make progress on destroying object
         if (destroyObject)
         {
             if (isFireActive)
@@ -147,6 +161,7 @@ public class Fire : MonoBehaviour
             {
                 if (!destroyed)
                 {
+                    this.transform.parent = null;
                     objectToDestroy.BurnUp();
                     destroyed = true;
                     Extinguish();
@@ -154,7 +169,7 @@ public class Fire : MonoBehaviour
             }
         }
         
-
+        // Coals logic- start fire if on coals long enough, otherwise rest progress towards that
         if (!onCoals)
         {
             loopsBeforeFire = loopsBeforeFireStartsOnCoals;
@@ -164,7 +179,6 @@ public class Fire : MonoBehaviour
                 smoke.Stop();
             }
         }
-
 
         if(onCoals && loopsBeforeFire <= 0 && !isFireActive)
         {

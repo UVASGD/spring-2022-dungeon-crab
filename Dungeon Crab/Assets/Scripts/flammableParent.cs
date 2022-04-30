@@ -6,7 +6,6 @@ using UnityEngine;
 public class flammableParent : MonoBehaviour
 {
     private bool started = false;
-    public int loopsUntilCleanup = 200;
     public bool spawnThingOnBurnup = false;
     public GameObject thingToSpawn;
     // Start is called before the first frame update
@@ -19,19 +18,6 @@ public class flammableParent : MonoBehaviour
     void Update()
     {
         
-    }
-
-    private void FixedUpdate()
-    {
-        if (started)
-        {
-            loopsUntilCleanup--;
-        }
-        
-        if(loopsUntilCleanup < 0)
-        {
-            Destroy(this.gameObject);
-        }
     }
 
     public void BurnUp()
@@ -47,7 +33,7 @@ public class flammableParent : MonoBehaviour
             if (spawnThingOnBurnup && thingToSpawn != null)
                 Instantiate(thingToSpawn, transform.position + new Vector3(0,0.4f,0), Quaternion.identity);
         }
-        started = true;
-        
+        Destroy(this.gameObject);
+
     }
 }

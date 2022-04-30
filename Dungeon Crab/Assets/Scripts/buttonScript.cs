@@ -5,7 +5,9 @@ using UnityEngine;
 public class buttonScript : MonoBehaviour
 {
     public bool isActive; //Boolean that controls whether the button is active
-    public int numThingsOnButton = 0; //Number of items on the button
+    public List<GameObject> thingsOnButton = new List<GameObject>();
+    private int stepsUntilCheckObject = 10;     //determines how often a button checks to make sure all the objects that were on it still exist (in terms of Physics steps)
+                                                // (it's implemented like this to improve performance- fewer iterations over the list)
 
     public bool buttonOpensGrate = true; //Whether the button opens or closes the grate
     public List<Grate> grateList = new List<Grate>(); //List of Grates controlled by the button
@@ -20,6 +22,7 @@ public class buttonScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
     }
 
     // Update is called once per frame
@@ -28,6 +31,45 @@ public class buttonScript : MonoBehaviour
         //TODO: Should the isActive turn the trigger off entirely?
     }
 
+    private void FixedUpdate()
+    {
+        // the following code handles cases where gameObjects have been disabled since they entered the button space
+        if(stepsUntilCheckObject < 0)
+        {
+            if(thingsOnButton.Count > 0)
+            {
+                thingsOnButton.RemoveAll(x => x == null);
+                if (thingsOnButton.Count == 0)
+                {
+                    if (buttonOpensGrate)
+                    {
+                        closeAllGrates();
+                    }
+                    else
+                    {
+                        openAllGrates();
+                    }
+
+                    if (buttonActivatesPlatform)
+                    {
+                        deactivateAllPlatforms();
+                    }
+                    else
+                    {
+                        activateAllPlatforms();
+                    }
+
+                }
+            }
+            stepsUntilCheckObject = 10;
+        }
+        else
+        {
+            stepsUntilCheckObject--;
+        }
+    }
+   
+
     private void OnTriggerEnter(Collider other)
     {
         if (!isTriggerActive(other))
@@ -35,10 +77,9 @@ public class buttonScript : MonoBehaviour
             return;
         }
 
-        Debug.Log(other.gameObject.name);
 
-        numThingsOnButton++;
-        if (numThingsOnButton > 0){
+        thingsOnButton.Add(other.gameObject);
+        if (thingsOnButton.Count > 0){
 
             if (buttonOpensGrate)
             {
@@ -52,11 +93,9 @@ public class buttonScript : MonoBehaviour
             if (buttonActivatesPlatform)
             {
                 activateAllPlatforms();
-                Debug.Log(other.gameObject.name + " Enters: Activating");
             }
             else {
                 deactivateAllPlatforms();
-                Debug.Log(other.gameObject.name + " Enters: Dectivating");
             }
         }
         
@@ -70,8 +109,8 @@ public class buttonScript : MonoBehaviour
             return;
         }
 
-        numThingsOnButton--;
-        if (numThingsOnButton == 0)
+        thingsOnButton.Remove(other.gameObject);
+        if (thingsOnButton.Count == 0)
         {
             if (buttonOpensGrate)
             {
@@ -84,12 +123,10 @@ public class buttonScript : MonoBehaviour
             if (buttonActivatesPlatform)
             {
                 deactivateAllPlatforms();
-                Debug.Log(other.gameObject.name + " Exits: Deactivating");
             }
             else
             {
                 activateAllPlatforms();
-                Debug.Log(other.gameObject.name + " Exits: Activating");
             }
 
         }
